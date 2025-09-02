@@ -6,22 +6,19 @@
 
 @section('main-content')
     <div class="max-w-3xl mx-auto px-4 py-12">
+        @if ($links->isEmpty())
+            <p class="text-gray-500 text-lg font-medium text-center">No shortened links found yet.</p>
+        @else
         <div class="p-6 border border-gray-200 rounded-xl shadow bg-white">
-            @if ($links->isEmpty())
-                <p class="text-gray-500 text-lg font-medium text-center">No shortened links found yet.</p>
-            @else
             <ul class="divide-y divide-gray-200">
                 @foreach ($links as $link)
                     <li class="py-4">
-                        <div class="flex flex-col">
+                        <div class="flex flex-col mb-1">
                             <a href="{{ url($link->slug) }}" target="_blank" 
-                                class="text-blue-600 underline break-all text-sm font-medium">
+                                class="text-black underline break-all text-md font-medium">
                                 {{ url($link->slug) }}
                             </a>
-                            <span class="text-gray-500 truncate text-xs">{{ $link->original_url }}</span>
-                            <span class="text-gray-400 text-xs mt-1">
-                                Created at {{ $link->created_at->format('Y-m-d H:i') }}
-                            </span>
+                            <span class="text-gray-500 truncate text-sm">{{ $link->original_url }}</span>
                         </div>
                     </li>
                 @endforeach
