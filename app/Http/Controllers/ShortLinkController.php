@@ -27,8 +27,8 @@ class ShortLinkController extends Controller
             'original_url' => 'required|url|max:2048',
             'slug' => 'nullable|alpha_dash|unique:short_links,slug|max:50',
         ], [
-            'original_url.required' => 'URL is required',
-            'original_url.url' => 'URL must be valid',
+            'original_url.required' => 'Original URL is required',
+            'original_url.url' => 'Original URL must be valid',
             'slug.unique' => 'This slug is already taken',
         ]);
 
@@ -71,5 +71,14 @@ class ShortLinkController extends Controller
         }
 
         return redirect($link->original_url);
+    }
+
+    public function destroy($id)
+    {
+        $link = ShortLink::findOrFail($id);
+        $link->delete();
+
+        return redirect()->route('shorten.index')
+                        ->with('success', 'Short link deleted successfully');
     }
 }
